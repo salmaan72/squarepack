@@ -1,0 +1,31 @@
+{
+  "name": "squarepack",
+  "version": "1.0.0",
+  "description": "An E-commerce website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salmaan72/squarepack.git"
+  },
+  "author": "Salmaan Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salmaan72/squarepack/issues"
+  },
+  "homepage": "https://github.com/salmaan72/squarepack#readme",
+  "dependencies": {
+    "async": "2.6.0",
+    "bcrypt": "2.0.0",
+    "body-parser": "1.18.2",
+    "bson-objectid": "1.2.3",
+    "express": "4.16.3",
+    "jsonwebtoken": "8.2.1",
+    "mongoose": "5.0.15",
+    "morgan": "1.9.0",
+    "nodemon": "1.17.3"
+  }
+}
