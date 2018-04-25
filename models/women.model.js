@@ -31,6 +31,6 @@ let womenSchema = new Schema({
   searchId: String
 });
 
-let womenModel = mongoose.model('women_models', womenSchema);
+let womenModel = mongoose.model('women_model', womenSchema);
 
 module.exports = womenModel;

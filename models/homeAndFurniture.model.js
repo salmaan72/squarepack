@@ -29,6 +29,6 @@ let homeSchema = new Schema({
   searchId: String
 });
 
-const homeDecorModel = mongoose.model('homeDecor_model', homeSchema);
+const homeAndFurnitureModel = mongoose.model('homefurniture_model', homeSchema);
 
-module.exports = homeDecorModel;
+module.exports = homeAndFurnitureModel;

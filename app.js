@@ -144,7 +144,7 @@ eventEmitter.once('instantiate models', function(){
 eventEmitter.once('instantiate categories', function(electronics_id, men_id, women_id, kids_id, furniture_id){
   let catnew = new db.catModel({
     catId: '#categories',
-    1: {
+    electronics: {
       cat: "electronics",
       subcat: [
         "mobiles",
@@ -155,7 +155,7 @@ eventEmitter.once('instantiate categories', function(electronics_id, men_id, wom
       ],
       _products: electronics_id
     },
-    2: {
+    men: {
       cat: "men",
       subcat: [
         "footwear",
@@ -165,7 +165,7 @@ eventEmitter.once('instantiate categories', function(electronics_id, men_id, wom
       ],
       _products: men_id
     },
-    3: {
+    women: {
       cat: "women",
       subcat: [
         "footwear",
@@ -175,7 +175,7 @@ eventEmitter.once('instantiate categories', function(electronics_id, men_id, wom
       ],
       _products: women_id
     },
-    4: {
+    kids: {
       cat: "baby&kids",
       subcat: [
         "toys",
@@ -184,8 +184,8 @@ eventEmitter.once('instantiate categories', function(electronics_id, men_id, wom
       ],
       _products: kids_id
     },
-    5: {
-      cat: "home&furniture",
+    home_furniture: {
+      cat: "home_furniture",
       subcat: [
         "kitchen_dining",
         "dining_serving",

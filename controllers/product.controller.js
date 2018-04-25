@@ -18,7 +18,7 @@ db.catModel.findOne({'catId': '#categories'}, function(err, found){
   for(let j in foundObj){
     //console.log(foundObj[j]);
     if(foundObj[j]['cat'] === req.query.cat){
-      if(req.query.cat === 'electronics'){
+      if(foundObj[j]['cat'] === 'electronics'){
         dbHandle = db.elecModel;
         filter = {
           'searchId': '#electronic_products'
@@ -29,6 +29,24 @@ db.catModel.findOne({'catId': '#categories'}, function(err, found){
         filter = {
           'searchId': '#men_products'
         };
+      }
+      else if(foundObj[j]['cat'] === 'women'){
+        dbHandle = db.womenModel;
+        filter = {
+          'searchId': '#women_products'
+        }
+      }
+      else if(foundObj[j]['cat'] === 'baby&kids'){
+        dbHandle = db.kidsModel;
+        filter = {
+          'searchId': '#kids_products'
+        }
+      }
+      else if(foundObj[j]['cat'] === 'home_furniture'){
+        dbHandle = db.homeAndFurnitureModel;
+        filter = {
+          'searchId': '#homeAndFurniture_products'
+        }
       }
 
       dbHandle.findOne(filter, function(err, categoryProducts){
@@ -53,9 +71,9 @@ db.catModel.findOne({'catId': '#categories'}, function(err, found){
 
 productController.getProductByCategory = function(req, res){
   db.catModel.find({}).populate({
-    path: '1._products'
+    path: req.query.cat+'._products'
   }).then(function(data){
-    res.send(data[0][1]);
+    res.send(data[0][req.query.cat]);
   }).catch(function(err){
     res.send(err);
   });

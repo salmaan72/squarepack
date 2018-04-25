@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const catSchema = new Schema({
   catId: String,
-  1: {
+  electronics: {
     cat: String,
     subcat: [String],
     _products: {
@@ -15,7 +15,7 @@ const catSchema = new Schema({
       required: true
     }
   },
-  2: {
+  men: {
     cat: String,
     subcat: [String],
     _products: {
@@ -24,7 +24,7 @@ const catSchema = new Schema({
       required: true
     }
   },
-  3: {
+  women: {
     cat: String,
     subcat: [String],
     _products: {
@@ -33,7 +33,7 @@ const catSchema = new Schema({
       required: true
     }
   },
-  4: {
+  kids: {
     cat: String,
     subcat: [String],
     _products: {
@@ -42,12 +42,12 @@ const catSchema = new Schema({
       required: true
     }
   },
-  5: {
+  home_furniture: {
     cat: String,
     subcat: [String],
     _products: {
       type: Schema.ObjectId,
-      ref: 'homedecor_model',
+      ref: 'homefurniture_model',
       required: true
     }
   }
