@@ -8,7 +8,6 @@ const catSchema = new Schema({
   catId: String,
   1: {
     cat: String,
-    _id: String,
     subcat: [String],
     _products: {
       type: Schema.ObjectId,
@@ -18,27 +17,39 @@ const catSchema = new Schema({
   },
   2: {
     cat: String,
-    _id: String,
     subcat: [String],
     _products: {
       type: Schema.ObjectId,
-      ref: "men_model"
+      ref: "men_model",
+      required: true
     }
   },
   3: {
     cat: String,
-    _id: String,
-    subcat: [String]
+    subcat: [String],
+    _products: {
+      type: Schema.ObjectId,
+      ref: 'women_model',
+      required: true
+    }
   },
   4: {
     cat: String,
-    _id: String,
-    subcat: [String]
+    subcat: [String],
+    _products: {
+      type: Schema.ObjectId,
+      ref: 'kids_model',
+      required: true
+    }
   },
   5: {
     cat: String,
-    _id: String,
-    subcat: [String]
+    subcat: [String],
+    _products: {
+      type: Schema.ObjectId,
+      ref: 'homedecor_model',
+      required: true
+    }
   }
 });
 

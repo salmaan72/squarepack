@@ -16,20 +16,21 @@ let footwearSchema = new Schema({
 let clothingSchema = new Schema({
   brand: String,
   size: [String],
+  type: String,
   highlights: [String],
   price: Number,
   currency: String,
   fabric: String
 });
 
-let menSchema = new Schema({
+let womenSchema = new Schema({
   footwear: [footwearSchema],
-  top_wear: [clothingSchema],
-  bottom_wear: [clothingSchema],
+  ethnic_wear: [clothingSchema],
+  western_wear: [clothingSchema],
   sports_wear: [clothingSchema],
   searchId: String
 });
 
-let menModel = mongoose.model('men_model', menSchema);
+let womenModel = mongoose.model('women_models', womenSchema);
 
-module.exports = menModel;
+module.exports = womenModel;
