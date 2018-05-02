@@ -8,6 +8,7 @@ const adminModel = require('./models/admin.model');
 const womenModel = require('./models/women.model');
 const kidsModel = require('./models/kids.model');
 const homeAndFurnitureModel = require('./models/homeAndFurniture.model');
+const cartModel = require('./models/cart.model');
 
 module.exports = {
   catModel,
@@ -17,5 +18,6 @@ module.exports = {
   adminModel,
   womenModel,
   kidsModel,
-  homeAndFurnitureModel
+  homeAndFurnitureModel,
+  cartModel
 };

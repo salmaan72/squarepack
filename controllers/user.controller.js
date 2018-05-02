@@ -19,12 +19,18 @@ userController.signup = function(req,res){
       lastname: req.body.lastname,
       email: req.body.email,
       phone: req.body.phone,
-      password: hash
+      password: hash,
+      signup_date: Date.now()
     });
     newUser.save().then(function(){
       res.redirect(307, '/signup-success');
     });
   });
+  let newcart = new db.cartModel({
+    email: req.body.email,
+    cart: []
+  });
+  newcart.save();
 }
 
 userController.login = function(req,res){

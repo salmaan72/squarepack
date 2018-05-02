@@ -24,7 +24,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  signup_date: Date
 });
 
 const userModel = mongoose.model('user_model', userSchema);

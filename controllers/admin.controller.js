@@ -38,19 +38,14 @@ adminController.login = function(req,res){
 }
 
 adminController.logout = function(req, res){
-  let token = splitCookies.cookieSplit(req.headers.cookie).adminToken;
-  verifyToken.verifyAdminToken(token,res,function(authData){
-    res.clearCookie('adminToken',{path:'/'});
-    res.clearCookie('io',{path:'/'});
-    res.redirect('/');
-  });
+  res.clearCookie('adminToken',{path:'/'});
+  res.clearCookie('io',{path:'/'});
+  res.redirect('/');
 }
 
 adminController.dashboard = function(req,res){
-  let token = splitCookies.cookieSplit(req.headers.cookie).adminToken;
-  verifyToken.verifyAdminToken(token,res,function(authData){
-    res.send('admin dashboard'); // add a dashboard view
-  });
+  res.send('admin dashboard'); // add a dashboard view
+
 }
 
 module.exports = adminController;
