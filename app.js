@@ -14,11 +14,27 @@ const adminRoutes = require('./adminRoutes');
 const db = require('./models');
 const bcrypt = require('bcrypt');
 const async = require('async');
-const logs = require('./libs/logs');
+const fs = require('fs');
+const config = require('./libs/config');
 
-//app.use(morgan('dev'));
-app.use(logs.errorLog);
-app.use(logs.accessLog);
+// logging requests
+let accesslogStream = fs.createWriteStream('./squarepack_logs/access.log', { flags: 'a', encoding: 'utf8' });
+app.use(morgan(config.logFormat, {
+  skip: function(req, res){
+    return res.statusCode >= 400;
+  },
+  stream: accesslogStream
+}));
+
+// logging errors
+let errorlogStream = fs.createWriteStream('./squarepack_logs/error.log', { flags: 'a', encoding: 'utf8' });
+app.use(morgan(config.logFormat, {
+  skip: function(req,res){
+    return res.statusCode < 400;
+  },
+  stream: errorlogStream
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -65,7 +81,7 @@ eventEmitter.once('instantiate models', function(){
       electronics_id = String(data._id);
       callback(null, 1);
     }).catch(function(err){
-      console.log(err); // ************************* edit
+      console.log(err);
     });
   },
   function(callback){
@@ -81,7 +97,7 @@ eventEmitter.once('instantiate models', function(){
       men_id = String(data._id);
       callback(null, 2);
     }).catch(function(err){
-      console.log(err); //************************* edit
+      console.log(err);
     });
   },
   function(callback){
@@ -97,7 +113,7 @@ eventEmitter.once('instantiate models', function(){
       women_id = String(data._id);
       callback(null, 3);
     }).catch(function(err){
-      console.log(err) //******************************** edit
+      console.log(err);
     });
   },
   function(callback){
@@ -112,7 +128,7 @@ eventEmitter.once('instantiate models', function(){
       kids_id = String(data._id);
       callback(null, 4);
     }).catch(function(err){
-      console.log(err) //**************************** edit
+      console.log(err);
     });
   },
   function(callback){
@@ -127,7 +143,7 @@ eventEmitter.once('instantiate models', function(){
       furniture_id = String(data._id);
       callback(null, 5);
     }).catch(function(err){
-      console.log(err) //*************************** edit
+      console.log(err);
     });
   },
   function(callback){
@@ -135,7 +151,7 @@ eventEmitter.once('instantiate models', function(){
   }
 ], function(err, result){
   if(err){
-    console.log(err)  //******************************* edit
+    console.log(err);
   }
 });
 

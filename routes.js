@@ -10,11 +10,13 @@ const userAndAdmin = require('./middlewares/routesForUserAndAdmin');
 const authoriseUser = require('./middlewares/authoriseUser');
 const cartController = require('./controllers/cart.controller');
 const categoryToModel = require('./middlewares/categoryToModel');
+const responseGenerator = require('./libs/responseGenerator');
 const passwordRecovery = require('./controllers/passwordRecovery.controller');
 const checks = require('./middlewares/checks');
 
 routes.get('/', function(req,res){
-  res.send('Landing Page');
+  let response = responseGenerator.response('success', 200, 'Welcome to squarepack.', null);
+  res.send(response);
 });
 
 // ******************  user routes  ****************************************
@@ -27,10 +29,6 @@ routes.route('/login').get(function(req, res){
 }).post(userController.login);
 
 routes.post('/logout', userController.logout);
-
-routes.post('/signup-success', function(req, res){
-  res.send('signup was successful. Login to continue'); // add view
-});
 
 routes.get('/:user/profile', authoriseUser.authorise, profileController.profile);
 

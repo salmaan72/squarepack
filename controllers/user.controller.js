@@ -8,6 +8,7 @@ const splitCookies = require('./../libs/splitCookies');
 const verifyToken = require('./../libs/verifyToken');
 const config = require('./../libs/config');
 const db = require('./../models');
+const responseGenerator = require('./../libs/responseGenerator');
 
 let userController = {};
 
@@ -22,8 +23,12 @@ userController.signup = function(req,res){
       password: hash,
       signup_date: Date.now()
     });
-    newUser.save().then(function(){
-      res.redirect(307, '/signup-success');
+    newUser.save().then(function(data){
+      let response = responseGenerator.response('success', 200, 'signup was successful. Login to continue.', null);
+      res.send(response);
+    }).catch(function(err){
+      let response = responseGenerator.response('failed', 500, 'Error occured: '+err, null);
+      res.send(response);
     });
   });
   let newcart = new db.cartModel({
@@ -57,7 +62,8 @@ userController.login = function(req,res){
           });
         }
         else{
-          res.send('wrong username/password');
+          let response = responseGenerator.response('failed', 400, 'wrong username/password', null);
+          res.send(response);
         }
       });
     }
@@ -69,7 +75,9 @@ userController.login = function(req,res){
     verifyToken.verifyUserToken(token,res,function(authData){
       res.clearCookie('token',{path:'/'});
       res.clearCookie('io',{path:'/'});
-      res.redirect('/');
+
+      let response = responseGenerator.response('success', 200, 'successfully logged out', null);
+      res.send(response);
     });
   }
 

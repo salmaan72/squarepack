@@ -6,16 +6,19 @@ const splitCookies = require('./../libs/splitCookies');
 const verifyToken = require('./../libs/verifyToken');
 const config = require('./../libs/config');
 const jwt = require('jsonwebtoken');
+const responseGenerator = require('./../libs/responseGenerator');
 
 let adminController = {};
 
 adminController.login = function(req,res){
   db.adminModel.findOne({'adminId':req.body.adminId}, function(err,foundUser){
     if(err){
-      res.send(err);
+      let response = responseGenerator.response('failed', 400, 'Error occured: '+err, null);
+      res.send(response);
     }
     else if(foundUser === null || foundUser === undefined){
-      res.send('wrong username/password');
+      let response = responseGenerator.response('failed', 400, 'wrong username/password', null)
+      res.send(response);
     }
     else {
       bcrypt.compare(req.body.key, foundUser.key, function(err, resp) {
@@ -30,7 +33,8 @@ adminController.login = function(req,res){
           });
         }
         else{
-          res.send('wrong username/password');
+          let response = responseGenerator.response('failed', 400, 'wrong username/password', null);
+          res.send(response);
         }
       });
     }
@@ -40,7 +44,8 @@ adminController.login = function(req,res){
 adminController.logout = function(req, res){
   res.clearCookie('adminToken',{path:'/'});
   res.clearCookie('io',{path:'/'});
-  res.redirect('/');
+  let response = responseGenerator.response('success', 200, 'Admin successfully logged out', null);
+  res.send(response);
 }
 
 adminController.dashboard = function(req,res){
