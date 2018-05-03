@@ -7,6 +7,11 @@ let checks = {};
 
 checks.isLoggedin = function(req, res, next){
   let token = splitCookies.cookieSplit(req.headers.cookie).token;
+  if(token === undefined || token === null){
+    
+    next();
+    return;
+  }
   verifyToken.verifyUserToken(token, res, function(authData){
     if(authData.user){
       res.send('Already logged in');

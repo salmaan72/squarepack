@@ -138,4 +138,11 @@ productController.deleteProduct = function(req, res){
   });
 }
 
+productController.getCategories = function(req, res){
+  db.catModel.findOne({'catId': '#categories'}, function(err, found){
+    let response = responseGenerator.response('success', 200, 'Product categories', found);
+    res.send(response);
+  });
+}
+
 module.exports = productController;

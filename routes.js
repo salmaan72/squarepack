@@ -6,7 +6,6 @@ const routes = express();
 const userController = require('./controllers/user.controller');
 const profileController = require('./controllers/profile.controller');
 const productController = require('./controllers/product.controller');
-const userAndAdmin = require('./middlewares/routesForUserAndAdmin');
 const authoriseUser = require('./middlewares/authoriseUser');
 const cartController = require('./controllers/cart.controller');
 const categoryToModel = require('./middlewares/categoryToModel');
@@ -51,10 +50,12 @@ routes.post('/reset-password', checks.isLoggedin, passwordRecovery.resetPassword
 
 
 //************** Routes for both users and admin  ****************************//
-//product routes
-routes.get('/product-by-category', userAndAdmin.authenticateBoth, productController.getProductByCategory);
 
-routes.get('/all-products', userAndAdmin.authenticateBoth, productController.allProducts);
+routes.get('/get-categories', authoriseUser.authorise, productController.getCategories);
+
+routes.get('/product-by-category', authoriseUser.authorise, productController.getProductByCategory);
+
+routes.get('/all-products', authoriseUser.authorise, productController.allProducts);
 
 
 module.exports = routes;

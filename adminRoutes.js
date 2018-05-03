@@ -6,8 +6,7 @@ const routes = express();
 const adminController = require('./controllers/admin.controller');
 const productController = require('./controllers/product.controller');
 const splitCookies = require('./libs/splitCookies');
-const verifyToken = require('./libs/verifyToken');
-const userAndAdmin = require('./middlewares/routesForUserAndAdmin');
+const verifyToken = require('./libs/verifyToken');;
 const categoryToModel = require('./middlewares/categoryToModel');
 const authoriseAdmin = require('./middlewares/authoriseAdmin');
 // ************************** note:  default path /admin  **************************** //
@@ -33,9 +32,11 @@ routes.post('/edit-product', authoriseAdmin.authorise, categoryToModel.returnMod
 routes.post('/delete-product', authoriseAdmin.authorise, categoryToModel.returnModel, productController.deleteProduct);
 
 //************** Routes for both users and admin  ****************************//
-//product routes
-routes.get('/product-by-category', userAndAdmin.authenticateBoth, productController.getProductByCategory);
 
-routes.get('/all-products', userAndAdmin.authenticateBoth, productController.allProducts);
+routes.get('/get-categories', authoriseAdmin.authorise, productController.getCategories);
+
+routes.get('/product-by-category', authoriseAdmin.authorise, productController.getProductByCategory);
+
+routes.get('/all-products', authoriseAdmin.authorise, productController.allProducts);
 
 module.exports = routes;
