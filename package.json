@@ -19,7 +19,6 @@
   "homepage": "https://github.com/salmaan72/squarepack#readme",
   "dependencies": {
     "async": "2.6.0",
-    "bcrypt": "2.0.0",
     "body-parser": "1.18.2",
     "bson-objectid": "1.2.3",
     "express": "4.16.3",
