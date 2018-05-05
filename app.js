@@ -12,7 +12,7 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const adminRoutes = require('./adminRoutes');
 const db = require('./models');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const async = require('async');
 const fs = require('fs');
 const config = require('./libs/config');
@@ -215,11 +215,9 @@ eventEmitter.once('instantiate categories', function(electronics_id, men_id, wom
 
 eventEmitter.once('create admin creds', function(){
   let saltRounds = 10;
-  bcrypt.hash('333-666-999', saltRounds, function(err, hash) {
     let admincreds = new db.adminModel({
       adminId: 'admin@squarepack.com',
-      key: hash
+      key: '333-666-999'
     });
     admincreds.save();
-  });
 });

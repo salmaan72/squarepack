@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const config = require('./../libs/config');
 const db = require('./../models');
 const splitCookies = require('./../libs/splitCookies');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 let passwordRecovery = {};
 
@@ -96,8 +96,7 @@ passwordRecovery.resetPassword = function(req, res){
   if(setpass_cookie){
     jwt.verify(email_cookie, config.secret_otp, function(err,authData){
       db.userModel.findOne({'email': authData.email}, function(err, foundUser){
-        bcrypt.hash(req.body.new_password, 10, function(err, hash) {
-          foundUser.password = hash;
+          foundUser.password = req.body.new_password;
           foundUser.save().then(function(data){
             res.clearCookie('setpass',{path:'/'});
             res.clearCookie('emailToken',{path:'/'});
@@ -107,7 +106,6 @@ passwordRecovery.resetPassword = function(req, res){
             let response = responseGenerator.response('failed', 500, 'Error occured: '+err, null);
             res.send(response);
           });
-        });
       });
     });
   }

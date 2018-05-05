@@ -2,7 +2,7 @@
 "use strict"
 
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 const splitCookies = require('./../libs/splitCookies');
 const verifyToken = require('./../libs/verifyToken');
@@ -14,13 +14,12 @@ let userController = {};
 
 userController.signup = function(req,res){
   let saltRounds = 10;
-  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
     let newUser = new db.userModel({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
       phone: req.body.phone,
-      password: hash,
+      password: req.body.password,
       signup_date: Date.now()
     });
     newUser.save().then(function(data){
@@ -30,7 +29,6 @@ userController.signup = function(req,res){
       let response = responseGenerator.response('failed', 500, 'Error occured: '+err, null);
       res.send(response);
     });
-  });
   let newcart = new db.cartModel({
     email: req.body.email,
     cart: []
@@ -44,27 +42,20 @@ userController.login = function(req,res){
       res.send(err);
     }
     else if(foundUser === null || foundUser === undefined){
-      res.send('wrong username/password');
+      let response = responseGenerator.response('failed', 400, 'wrong username/password', null);
+      res.send(response);
     }
     else {
-      bcrypt.compare(req.body.password, foundUser.password, function(err, resp) {
-        if(resp){
-          jwt.sign({user: foundUser.email},config.secret,function(err,token){
-            if(err){
-              res.send(err);
-            }
-            let data = {
-              name: foundUser.firstname+' '+foundUser.lastname
-            }
-            res.cookie('token',token,{ httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-            let name = foundUser.firstname+''+foundUser.lastname;
-            res.redirect('/'+name+'/profile');
-          });
+      jwt.sign({user: foundUser.email},config.secret,function(err,token){
+        if(err){
+          res.send(err);
         }
-        else{
-          let response = responseGenerator.response('failed', 400, 'wrong username/password', null);
-          res.send(response);
+        let data = {
+          name: foundUser.firstname+' '+foundUser.lastname
         }
+        res.cookie('token',token,{ httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        let name = foundUser.firstname+''+foundUser.lastname;
+        res.redirect('/'+name+'/profile');
       });
     }
   });
